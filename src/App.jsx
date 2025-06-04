@@ -40,9 +40,6 @@ const App = () => {
   });
     
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
@@ -90,7 +87,7 @@ const App = () => {
   };
   
   const createObstacle = (x, y) => {
-    setObstacles([...obstacles, { x, y, radius: obstacleRadius }]);
+    setObstacles(prev => [...prev, { x, y, radius: obstacleRadius }]);
   };
   
   const removeObstacle = (x, y) => {
@@ -101,9 +98,11 @@ const App = () => {
     });
     
     if (clickedObstacleIndex !== -1) {
-      const newObstacles = [...obstacles];
-      newObstacles.splice(clickedObstacleIndex, 1);
-      setObstacles(newObstacles);
+      setObstacles(prev => {
+        const newObstacles = [...prev];
+        newObstacles.splice(clickedObstacleIndex, 1);
+        return newObstacles;
+      });
       return true;
     }
     
@@ -312,10 +311,11 @@ const App = () => {
             case 'monochrome': // Black to white
               r = g = b = mappedValue;
               break;
-            case 'rainbow': // Full spectrum
+            case 'rainbow': { // Full spectrum
               const hue = (mappedValue / 255) * 360;
               [r, g, b] = hsvToRgb(hue, 0.8, 0.9);
               break;
+            }
             case 'emerald': // Green to white
               r = mappedValue;
               g = 255;
@@ -337,11 +337,12 @@ const App = () => {
               g = Math.min(255, Math.max(0, Math.floor(128 - Math.abs(mappedValue - 128))));
               b = Math.max(0, Math.floor(255 - mappedValue * 2));
               break;
-            case 'neon':
+            case 'neon': {
               // Bright neon colors
               const hue2 = (mappedValue / 255) * 360;
               [r, g, b] = hsvToRgb(hue2, 1.0, normalized > 0 ? 1.0 : 0.5);
               break;
+            }
             default:
               r = g = mappedValue;
               b = 255;
