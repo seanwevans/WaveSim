@@ -20,6 +20,12 @@ Start the development server with hot reloading:
 npm run dev
 ```
 
+Run the linter to check source files using ESLint:
+
+```bash
+npm run lint
+```
+
 ## Build and Deployment
 
 Generate a production build:
