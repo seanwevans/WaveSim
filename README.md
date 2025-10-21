@@ -1,4 +1,5 @@
 # WaveSim
+<img width="256" alt="Glowing Quantum Waves in Blue Dreamscape" src="https://github.com/user-attachments/assets/dd5acbd9-9aff-40e4-a6e5-3e89b611219c" />
 
 ## Project Overview
 
